@@ -7,6 +7,7 @@ Group:		Libraries
 Source0:	http://dl.sourceforge.net/libxtract/%{name}-%{version}.tar.gz
 # Source0-md5:	1d1987330a81b03309584e6bdadb0c72
 URL:		http://libxtract.sourceforge.net/
+BuildRequires:	fftw3-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -62,7 +63,8 @@ Statyczna biblioteka libxtract.
 %setup -q
 
 %build
-%configure
+%configure \
+	--enable-fft
 
 %{__make}
 
@@ -80,14 +82,14 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog NEWS README THANKS TODO
+%doc AUTHORS ChangeLog NEWS README TODO
 %attr(755,root,root) %{_libdir}/lib*.so.*.*.*
 
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/lib*.so
 %{_libdir}/lib*.la
-%{_includedir}/%{name}
+%{_includedir}/xtract
 %{_pkgconfigdir}/*.pc
 
 %files static

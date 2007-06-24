@@ -1,4 +1,5 @@
-Summary:	LibXtract is a library of audio feature extraction functions
+Summary:	LibXtract - a library of audio feature extraction functions
+Summary(pl.UTF-8):	LibXtract - biblioteka funkcji do wydobywania cech dźwięku
 Name:		libxtract
 Version:	0.4.5
 Release:	0.1
@@ -34,6 +35,31 @@ computing large numbers of features, but also makes it more flexible
 because extraction functions can be combined arbitrarily (one can take
 the irregularility of the Mel Frequency Cepstral Coefficients for
 example).
+
+%description -l pl.UTF-8
+LibXtract to prosta, przenośna i lekka biblioteka funkcji do
+wydobywania cech dźwięku. Celem biblioteki jest dostarczenie w miarę
+wyczerpującego zbioru prymitywów wydobywania cech, które mogą być
+łączone "kaskadowo" tworząc hierarchie wydobywania. Na przykład
+wariancja, odchylenie standardowe, skośność i kurtoza wymagają
+wcześniejszego obliczenia średniej wektora wejściowego. Jednak zamiast
+obliczać średnią wewnątrz każdej funkcji, powinna ona być przekazywana
+jako argument. Oznacza to, że jeśli użytkownik chce użyć wszystkich
+tych cech, średnia jest obliczana tylko raz i przekazywana do
+wszystkich wymagających jej funkcji.
+
+Filozofia cech "kaskadowych" jest wykorzystywana w całej bibliotece,
+na przykład w przypadku cech operujących na widmie wartości
+bezwzględnych wektora sygnału (np. nieregularność) widmo nie jest
+obliczane wewnątrz danej funkcji, lecz wskaźnik do pierwszego
+elementu w tablicy zawierającej widmo wartości bezwzględnych jest
+przekazywany jako argument.
+
+Powoduje to, że biblioteka jest nie tylko bardziej wydajna przy
+obliczaniu wielu cech jednocześnie, ale także bardziej elastyczna,
+ponieważ funkcje wydobywania mogą być łączone w dowolny sposób
+(można na przykład uzyskać nieregularność współczynników cepstrum
+częstotliwości Mela).
 
 %package devel
 Summary:	Header files for libxtract library

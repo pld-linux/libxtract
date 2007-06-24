@@ -8,7 +8,7 @@ Group:		Libraries
 Source0:	http://dl.sourceforge.net/libxtract/%{name}-%{version}.tar.gz
 # Source0-md5:	1d1987330a81b03309584e6bdadb0c72
 URL:		http://libxtract.sourceforge.net/
-BuildRequires:	fftw3-devel
+BuildRequires:	fftw3-single-devel >= 2.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -66,6 +66,7 @@ Summary:	Header files for libxtract library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki libxtract
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
+Requires:	fftw3-single-devel >= 2.0
 
 %description devel
 Header files for libxtract library.
@@ -109,15 +110,15 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS README TODO
-%attr(755,root,root) %{_libdir}/lib*.so.*.*.*
+%attr(755,root,root) %{_libdir}/libxtract.so.*.*.*
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/lib*.so
-%{_libdir}/lib*.la
+%attr(755,root,root) %{_libdir}/libxtract.so
+%{_libdir}/libxtract.la
 %{_includedir}/xtract
-%{_pkgconfigdir}/*.pc
+%{_pkgconfigdir}/libxtract.pc
 
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/lib*.a
+%{_libdir}/libxtract.a

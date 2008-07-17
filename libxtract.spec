@@ -1,12 +1,12 @@
 Summary:	LibXtract - a library of audio feature extraction functions
 Summary(pl.UTF-8):	LibXtract - biblioteka funkcji do wydobywania cech dźwięku
 Name:		libxtract
-Version:	0.4.5
+Version:	0.4.7
 Release:	0.1
 License:	GPL v2+
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/libxtract/%{name}-%{version}.tar.gz
-# Source0-md5:	1d1987330a81b03309584e6bdadb0c72
+# Source0-md5:	b1dadff5422a3f5b7661bbf2522dd01d
 URL:		http://libxtract.sourceforge.net/
 BuildRequires:	fftw3-single-devel >= 2.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -111,6 +111,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS README TODO
 %attr(755,root,root) %{_libdir}/libxtract.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libxtract.so.0
 
 %files devel
 %defattr(644,root,root,755)

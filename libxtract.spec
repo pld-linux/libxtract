@@ -9,6 +9,7 @@ Source0:	http://dl.sourceforge.net/libxtract/%{name}-%{version}.tar.gz
 # Source0-md5:	f84a55a392a2688f1c3fffc061c73c25
 URL:		http://libxtract.sourceforge.net/
 BuildRequires:	fftw3-single-devel >= 2.0
+BuildRequires:	pkgconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -51,14 +52,14 @@ wszystkich wymagających jej funkcji.
 Filozofia cech "kaskadowych" jest wykorzystywana w całej bibliotece,
 na przykład w przypadku cech operujących na widmie wartości
 bezwzględnych wektora sygnału (np. nieregularność) widmo nie jest
-obliczane wewnątrz danej funkcji, lecz wskaźnik do pierwszego
-elementu w tablicy zawierającej widmo wartości bezwzględnych jest
-przekazywany jako argument.
+obliczane wewnątrz danej funkcji, lecz wskaźnik do pierwszego elementu
+w tablicy zawierającej widmo wartości bezwzględnych jest przekazywany
+jako argument.
 
 Powoduje to, że biblioteka jest nie tylko bardziej wydajna przy
 obliczaniu wielu cech jednocześnie, ale także bardziej elastyczna,
-ponieważ funkcje wydobywania mogą być łączone w dowolny sposób
-(można na przykład uzyskać nieregularność współczynników cepstrum
+ponieważ funkcje wydobywania mogą być łączone w dowolny sposób (można
+na przykład uzyskać nieregularność współczynników cepstrum
 częstotliwości Mela).
 
 %package devel

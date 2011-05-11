@@ -1,15 +1,24 @@
 Summary:	LibXtract - a library of audio feature extraction functions
 Summary(pl.UTF-8):	LibXtract - biblioteka funkcji do wydobywania cech dźwięku
 Name:		libxtract
-Version:	0.6.2
+Version:	0.6.3
 Release:	1
 License:	GPL v2+
 Group:		Libraries
-Source0:	http://dl.sourceforge.net/libxtract/%{name}-%{version}.tar.gz
-# Source0-md5:	f84a55a392a2688f1c3fffc061c73c25
+Source0:	http://downloads.sourceforge.net/libxtract/%{name}-%{version}.tar.gz
+# Source0-md5:	43cd8403b9227690dd7e8c09acaefc36
+Patch0:		%{name}-link.patch
 URL:		http://libxtract.sourceforge.net/
+BuildRequires:	autoconf >= 2.13
+BuildRequires:	automake >= 1.6
 BuildRequires:	fftw3-single-devel >= 2.0
+BuildRequires:	jdk
+BuildRequires:	jpackage-utils
+BuildRequires:	libtool
 BuildRequires:	pkgconfig
+BuildRequires:	python-devel
+BuildRequires:	rpmbuild(macros) >= 1.294
+BuildRequires:	swig-python >= 1.3.21
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -87,12 +96,46 @@ Static libxtract library.
 %description static -l pl.UTF-8
 Statyczna biblioteka libxtract.
 
+%package -n java-libxtract
+Summary:	Java binding for libxtract library
+Summary(pl.UTF-8):	Wiązania Javy do biblioteki libxtract
+Group:		Libraries/Java
+Requires:	%{name} = %{version}-%{release}
+
+%description -n java-libxtract
+Java binding for libxtract library.
+
+%description -n java-libxtract -l pl.UTF-8
+Wiązania Javy do biblioteki libxtract.
+
+%package -n python-libxtract
+Summary:	Python binding for libxtract library
+Summary(pl.UTF-8):	Wiązania Pythona do biblioteki libxtract
+Group:		Libraries/Python
+Requires:	%{name} = %{version}-%{release}
+
+%description -n python-libxtract
+Python binding for libxtract library.
+
+%description -n python-libxtract -l pl.UTF-8
+Wiązania Pythona do biblioteki libxtract.
+
 %prep
 %setup -q
+%patch0 -p1
 
 %build
+%{__libtoolize}
+%{__aclocal} -I m4
+%{__autoconf}
+%{__autoheader}
+%{__automake}
 %configure \
-	--enable-fft
+	JAVAC="%{javac}" \
+	--enable-fft \
+	--enable-swig \
+	--with-java \
+	--with-python
 
 %{__make}
 
@@ -101,6 +144,10 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/libjxtract.{la,a}
+%{__rm} $RPM_BUILD_ROOT%{py_sitedir}/libxtract/_xtract.{la,a}
+%py_postclean
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -124,3 +171,14 @@ rm -rf $RPM_BUILD_ROOT
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libxtract.a
+
+%files -n java-libxtract
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libjxtract.so
+
+%files -n python-libxtract
+%defattr(644,root,root,755)
+%dir %{py_sitedir}/libxtract
+%attr(755,root,root) %{py_sitedir}/libxtract/_xtract.so
+%dir %{py_sitescriptdir}/libxtract
+%{py_sitescriptdir}/libxtract/xtract.py[co]

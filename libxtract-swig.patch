@@ -1,0 +1,11 @@
+--- libxtract-0.6.6/xtract/xtract_scalar.h.orig	2012-06-10 12:51:41.000000000 +0200
++++ libxtract-0.6.6/xtract/xtract_scalar.h	2013-07-20 07:28:51.545909975 +0200
+@@ -128,7 +128,7 @@
+  * \param *result: the  average deviation of the spectrum pointed to by *data
+  */
+ /*
+-int xtract_spectral_average_deviation(const float *data, const int N, const void *argv, float *result);
++//int xtract_spectral_average_deviation(const float *data, const int N, const void *argv, float *result);
+ */
+ 
+ /** \brief Extract the skewness of an input spectrum

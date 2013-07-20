@@ -1,14 +1,17 @@
 Summary:	LibXtract - a library of audio feature extraction functions
 Summary(pl.UTF-8):	LibXtract - biblioteka funkcji do wydobywania cech dźwięku
 Name:		libxtract
-Version:	0.6.3
+Version:	0.6.6
 Release:	1
 License:	GPL v2+
 Group:		Libraries
-Source0:	http://downloads.sourceforge.net/libxtract/%{name}-%{version}.tar.gz
-# Source0-md5:	43cd8403b9227690dd7e8c09acaefc36
+#Source0Download: https://github.com/jamiebullock/LibXtract/downloads
+Source0:	https://github.com/downloads/jamiebullock/LibXtract/%{name}-%{version}.tar.gz
+# Source0-md5:	098dde7030e03ffdfc246423cbcf6ed4
 Patch0:		%{name}-link.patch
-URL:		http://libxtract.sourceforge.net/
+Patch1:		%{name}-include.patch
+Patch2:		%{name}-swig.patch
+URL:		https://github.com/jamiebullock/LibXtract/
 BuildRequires:	autoconf >= 2.13
 BuildRequires:	automake >= 1.6
 BuildRequires:	fftw3-single-devel >= 2.0
@@ -123,6 +126,8 @@ Wiązania Pythona do biblioteki libxtract.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
 %{__libtoolize}
@@ -136,6 +141,9 @@ Wiązania Pythona do biblioteki libxtract.
 	--enable-swig \
 	--with-java \
 	--with-python
+
+%{__make} -C swig/java clean-local
+%{__make} -C swig/python clean-local
 
 %{__make}
 
@@ -157,7 +165,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog NEWS README TODO
+%doc AUTHORS ChangeLog NEWS README.md TODO
 %attr(755,root,root) %{_libdir}/libxtract.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libxtract.so.0
 
@@ -181,4 +189,5 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{py_sitedir}/libxtract
 %attr(755,root,root) %{py_sitedir}/libxtract/_xtract.so
 %dir %{py_sitescriptdir}/libxtract
+%{py_sitescriptdir}/libxtract/__init__.py[co]
 %{py_sitescriptdir}/libxtract/xtract.py[co]

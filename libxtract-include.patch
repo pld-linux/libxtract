@@ -1,0 +1,10 @@
+--- libxtract-0.6.6/swig/xtract.i.orig	2012-06-17 17:25:53.000000000 +0200
++++ libxtract-0.6.6/swig/xtract.i	2013-07-20 07:06:34.492632748 +0200
+@@ -5,6 +5,7 @@
+ */
+ 
+ %{
++#include <stdint.h>
+ #include "xtract/xtract_scalar.h"
+ #include "xtract/xtract_vector.h"
+ #include "xtract/xtract_helper.h"

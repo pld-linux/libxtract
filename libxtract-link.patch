@@ -1,22 +1,22 @@
---- libxtract-0.6.3/swig/java/Makefile.am.orig	2008-10-27 14:53:59.000000000 +0100
-+++ libxtract-0.6.3/swig/java/Makefile.am	2011-05-11 15:58:38.550164197 +0200
-@@ -86,7 +86,7 @@
+--- libxtract-0.6.6/swig/java/Makefile.am.orig	2013-07-20 06:57:09.052656477 +0200
++++ libxtract-0.6.6/swig/java/Makefile.am	2013-07-20 07:03:11.565974598 +0200
+@@ -69,7 +69,7 @@
  lib_LTLIBRARIES = libjxtract.la
  libjxtract_la_SOURCES = $(srcdir)/xtract_wrap.c $(SWIG_SOURCES)
  libjxtract_la_CFLAGS = $(SWIG_PYTHON_CPPFLAGS) -I$(top_srcdir)/src
--libjxtract_la_LDFLAGS = -module -lxtract
+-libjxtract_la_LDFLAGS = -lxtract
 +libjxtract_la_LDFLAGS = -module -avoid-version
  libjxtract_la_LIBADD = $(top_srcdir)/src/libxtract.la
  
  SWIG_JAVA_OPT = -java -package xtract.core
---- libxtract-0.6.3/swig/python/Makefile.am.orig	2008-10-27 14:54:00.000000000 +0100
-+++ libxtract-0.6.3/swig/python/Makefile.am	2011-05-11 16:02:13.166838051 +0200
+--- libxtract-0.6.6/swig/python/Makefile.am.orig	2013-07-20 06:57:09.052656477 +0200
++++ libxtract-0.6.6/swig/python/Makefile.am	2013-07-20 07:03:49.485973008 +0200
 @@ -7,7 +7,7 @@
  pkgpyexec_LTLIBRARIES = _xtract.la
  _xtract_la_SOURCES = $(srcdir)/xtract_wrap.c $(SWIG_SOURCES)
- _xtract_la_CFLAGS = $(SWIG_PYTHON_CPPFLAGS) -I$(top_srcdir)/src
+ _xtract_la_CFLAGS = $(AX_SWIG_PYTHON_CPPFLAGS) -I$(top_srcdir)/src
 -_xtract_la_LDFLAGS = -module -lxtract
 +_xtract_la_LDFLAGS = -module -avoid-version
  _xtract_la_LIBADD = $(top_srcdir)/src/libxtract.la
  
- xtract_wrap.c : $(SWIG_SOURCES)
+ $(srcdir)/xtract_wrap.c : $(SWIG_SOURCES)

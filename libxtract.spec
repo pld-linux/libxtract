@@ -145,13 +145,15 @@ Wiązania Pythona do biblioteki libxtract.
 %{__make} -C swig/java clean-local
 %{__make} -C swig/python clean-local
 
-%{__make}
+%{__make} -j1 \
+	CLASSPATH=.
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT
+	DESTDIR=$RPM_BUILD_ROOT \
+	CLASSPATH=.
 
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/libjxtract.{la,a}
 %{__rm} $RPM_BUILD_ROOT%{py_sitedir}/libxtract/_xtract.{la,a}

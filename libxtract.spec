@@ -1,8 +1,13 @@
+#
+# Conditional build:
+%bcond_with	java		# build java bindings
+%bcond_without	python		# build python bindings
+#
 Summary:	LibXtract - a library of audio feature extraction functions
 Summary(pl.UTF-8):	LibXtract - biblioteka funkcji do wydobywania cech dźwięku
 Name:		libxtract
 Version:	0.6.6
-Release:	2
+Release:	3
 License:	GPL v2+
 Group:		Libraries
 #Source0Download: https://github.com/jamiebullock/LibXtract/downloads
@@ -15,13 +20,13 @@ URL:		https://github.com/jamiebullock/LibXtract/
 BuildRequires:	autoconf >= 2.13
 BuildRequires:	automake >= 1.6
 BuildRequires:	fftw3-single-devel >= 2.0
-BuildRequires:	jdk
-BuildRequires:	jpackage-utils
+%{?with_java:BuildRequires:	jdk}
+%{?with_java:BuildRequires:	jpackage-utils}
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
-BuildRequires:	python-devel
+%{?with_python:BuildRequires:	python-devel}
 BuildRequires:	rpmbuild(macros) >= 1.294
-BuildRequires:	swig-python >= 1.3.21
+%{?with_python:BuildRequires:	swig-python >= 1.3.21}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -137,13 +142,13 @@ Wiązania Pythona do biblioteki libxtract.
 %{__automake}
 %configure \
 	JAVAC="%{javac}" \
-	--enable-fft \
 	--enable-swig \
-	--with-java \
-	--with-python
+	%{?with_java:--with-java} \
+	%{?with_python:--with-python} \
+	--enable-fft
 
-%{__make} -C swig/java clean-local
-%{__make} -C swig/python clean-local
+%{?with_java:%{__make} -C swig/java clean-local}
+%{?with_python:%{__make} -C swig/python clean-local}
 
 %{__make} -j1 \
 	CLASSPATH=.
@@ -155,9 +160,9 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT \
 	CLASSPATH=.
 
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/libjxtract.{la,a}
 %{__rm} $RPM_BUILD_ROOT%{py_sitedir}/libxtract/_xtract.{la,a}
-%py_postclean
+%{?with_java:%{__rm} $RPM_BUILD_ROOT%{_libdir}/libjxtract.{la,a}}
+%{?with_python:%py_postclean}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -182,10 +187,13 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_libdir}/libxtract.a
 
+%if %{with java}
 %files -n java-libxtract
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libjxtract.so
+%endif
 
+%if %{with python}
 %files -n python-libxtract
 %defattr(644,root,root,755)
 %dir %{py_sitedir}/libxtract
@@ -193,3 +201,4 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{py_sitescriptdir}/libxtract
 %{py_sitescriptdir}/libxtract/__init__.py[co]
 %{py_sitescriptdir}/libxtract/xtract.py[co]
+%endif
